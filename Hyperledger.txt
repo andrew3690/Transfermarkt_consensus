@@ -1,0 +1,161 @@
+Hyperledger Greenhouse:
+
+    Hyperledger Fabric:
+        characteristics:
+            Open Source Distributed Ledger Platform (DLT);
+            Linux Foundation;
+            35 organizations, 200 developers;
+
+    
+            Modular and configurable architecture
+                01  Consensus protocols;
+                
+                02  Identity management protocols;
+
+                03 Key management protocols;
+                
+                04 Cryptographic libraries;
+                
+                05 Smart Contracts;
+                
+                06 Databases;
+            
+            Launched in 2015;
+            
+                Private and Permissioned;
+                Membership Service Provider (MSP):
+                    PKI with X.509 certificates: Fabric CA, External CA.
+                    Actors: peers, orderes, administrators, client aplications...
+                    IDEMix: Provides pseudo-anonimity.
+            
+            Channels: Communication | Ledger : World State(DB), LevelDB, CouchDB | Chaincode: Go, Node and Java | Consensus: Raft, Kafka and Solo | Privacy: Channels, Data collections, Encrypted Data
+
+            NETWORK ELEMENTS:
+                Components: 
+                    Chain codes | Channels | Network config file | Ledger | Peers |
+
+                Entities:
+                    Organizations | Orderer | Certification authorities | Consortium
+            
+            What does a network need to have?
+                Orderer;
+                Network Configuration;
+                Channel;
+
+            How does creating a network work?
+
+                Can be created independently.
+                
+                Identification through DNS or IP address in digital certificates.
+
+                Each node on the network needs to have acopy of the "sysconfig ledger".
+            
+                Elements:
+                    Network configuration
+                        Is the first block.
+                        Configures the network.
+                        Elements network.
+                        Informations.
+                        Settings.
+                    
+                    Organization:
+                        Defined in the network configuration.
+                        
+                        Organizations under same Network Configuration:
+                            same permissions.
+                        
+                        Groups ofparticipants.
+
+                        Orderer:
+                            Configurations necessary for transactio consensus.
+
+                            Will admit the entry of new participants.
+                    
+                    Consortium:    
+                        Two or more network organizations.
+                        
+                        Transact data with each other.
+
+                        Form a consortium with permissions.
+
+                        Own objective.
+
+                        Approves transactions.
+
+                    Channel:
+                        Isolation and confidentiality of data.
+                        
+                        Communicates to connect network components.
+
+                        Has its own settings.
+
+                        Are independent:
+                            not governed by the network.
+                            not affected by changes to
+                            Network Configuration.
+
+                    Channel configuration:
+                        Channels generate configuration block.
+
+                        Check the peer'spermission: 
+                            reading or writing information to the ledger.
+                    
+                    Peer
+                        Copy of the ledger.
+                        Anchor peers:
+                            execute smart contract transactions.
+    
+                        Leading peers:
+                            validate blocks of ordered transactions.
+
+                    Chain code
+                        Installed and instantiated on a peer before a client application can invoke it.
+
+                        Define access to the ledger; 
+                        
+                        Functions to read info from the ledger and update the information.
+
+                    Ledger
+                        Stores the transactions and states of the chain code
+                        
+                        Physically hosted on the peer.
+                        
+                        Logically belongs to the channel.
+                    
+                    Certificate authority
+                        Allows to establish access permissions.
+                        
+                        Issue certificates to authenticate organizations.
+
+                        Network can have 1 or more. 
+                        
+                        Organizations can use their own CA.
+                    
+                    Client application:
+                        Use certificates to authenticate transaction proposals.
+                        Construct transactions.
+
+
+                TRANSACTION FLOW:
+                    Transaction request TP1:
+                        verified by A1
+                            chaincode -> function -> parameter.
+                        
+                        with MSP.
+                            verify identity.
+                            verify application permissions
+
+                            Permisions of R1:
+                                request modifications.
+                                request readings in L1
+                                    Verifies:
+                                        identity
+                                        authorization
+                        
+                        ordered transactions create blocks
+
+                        Update their copy of the ledger with this new block.
+
+                        The new block is added to the blockchain structure
+
+

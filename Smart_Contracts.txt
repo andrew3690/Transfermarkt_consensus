@@ -1,0 +1,210 @@
+
+    A contract is...
+    like a promise [...], a deal between two or more
+    people or organisations to do certain things.
+
+    Smart contracts are...
+    programs whose correct execution is
+    automatically enforced without relying on a
+    trusted authority.
+
+    Where can smart contracts be run?
+        ● Ethereum
+    
+    Ethereum Virtual Machine (EVM):
+        ● Runtime environment for smart contracts
+        ● Can emulate a Turing machine
+        ● Gas limits computation (prevents DoS)
+        ● Stack-based architecture
+        ● 256-bit words
+        ● Memory: word addressed byte array
+        ● Non-volatile storage
+        ● Isolates data outside blockchain
+    
+    EVM Language
+        ● Stack-based bytecode language
+        ● Mix of Bitcoin script, Assembly and Lisp
+        ● Sequences of opcodes change the EVM state
+
+        State 0: PC: 0 STACK: [] MEM: [], STORAGE: {}
+            PUSH1 0 ...
+        State 1: PC: 2 STACK: [0] MEM: [], STORAGE: {}
+
+        ● Like assembly, EVM lang may be hard to use
+        ● High-level langs ease writing smart contracts
+    
+    The language zoo
+    ● The most popular
+        ○ Solidity
+    ● Others
+        ○ Vyper
+        ○ Pyramid scheme
+        ○ Flint
+        ○ LLL
+        ○ Bamboo
+        ○ Serpent
+    
+    Smart contracts in Solidity
+
+        ● Look like a class in Object-Oriented Prog
+                Smart Contract
+                __________________
+                |Functions |State|
+                |__________|_____|
+    
+    Structure of a contract
+        ● pragma & solidity version
+        ● contract & name of the contract
+        ● state variables
+        ● functions
+    
+    Functions
+        ● Unit of code within a contract
+
+        function name(type1 arg1, type2 arg2, ...)
+        [visibility]
+        [label]
+        [returns (typeA [nameA], typeB [nameB], ...)]
+        { function body }
+    
+        visibility:
+            ● Optional and default is public
+            ● How a function can be called:
+                ○ external: only from outside and via transactions
+                ○ internal: only inside current/derived contracts
+                ○ public: external or internal
+                ○ private: only inside the current contract
+            ● external is cheaper (gas) than public
+
+        label:
+            ● Optional and (apparently) no default
+            ● Some of the available "labels"
+                ○ pure: cannot read/modify state (not enforced)
+                ○ view: cannot modify state
+                ○ payable: allows to receive Ether to your contract
+
+        State variables
+            ● Permanently stored in a contract's storage
+            ● Not in a function
+        
+    
+    Basic data types
+        ● Solidity supports many of the basic data types
+            ○ uint : unsigned int of 256 bits
+            ○ int : 256-bit integer, positive and negative value
+            ○ string: string of characters
+            ○ bool: a logic true or false value
+            ○ bytesX: fixed size array of X bytes (1≤X≤32)
+    
+    State variables: visibility
+        ● Optional and default is internal
+        ● Unlike functions, external is not possible
+        ● Let a be a public state variable:
+            ○ the external getter a() is generated automatically
+            ○ no setter is generated automatically for a
+            ○ a can only be changed externally via a setter
+    
+    Arrays
+        ● More expensive than bytesX arrays
+        ● Fixed size
+            ○ Declare: dataType[n] variableName
+        
+        ● Dynamic size
+            ○ Declare: datatype[] variableName
+            ○ Instantiate: new directive
+        
+        ● Get/Set
+            ○ The n-th element (0≤k<n): variableName[k]
+        ● The size of the array: variableName.length
+    
+    Structs
+        ● Heterogeneous data structure
+        ● Declaration
+            ○ struct {type1 member1;…; typeN memberN} varName
+        ● Get/Set
+            ○ varName.member
+
+        Example:
+            pragma solidity ^0.4.25;
+            contract CrowdFunding {
+            
+                // Defines a new type with two fields.
+                struct Funder { string name; uint amount; }
+                
+                Funder[] internal funders;
+                uint public raised = 0;
+                
+                function contribute(string _name, uint _amount) public{
+                
+                funders.push(Funder(name: _name, amount: _amount));
+                raised += _amount;
+                }
+                
+                function getFunderName( uint index) public view returns(string){
+                return funders[index].name;
+                }
+            }
+    
+    Address Structure
+        ● A user or smart contract has a unique address
+        ● Addresses are identified by a 20-byte number
+        ● The address structure has the members
+        ○ balance: a variable containing the balance in Wei
+        ○ transfer: a function for receiving Wei (cryptocurr)
+
+        Example:
+            address x = 0x123;
+            address myAddress = this;//my smart contract addr
+            if (x.balance < 10 && myAddress.balance >= 10)
+            x.transfer(10);
+    
+
+    Msg structure
+        ● Represents the call used to invoke a function
+        ● The msg structure has members, including
+            ○ sender: the address that invoked the function
+            ○ value: the amount of Wei sent by sender
+        
+        Example:
+            pragma solidity ^0.4.25;
+            contract CrowdFunding2 {
+                struct Funder { address addr; uint amount; }
+                Funder[] internal funders;
+                uint public raised = 0;
+
+                function contribute() public payable {
+                    funders.push(Funder({addr: msg.sender, amount: msg.value}));
+                    raised += msg.value;
+                }
+            }
+    
+    Mapping structure
+        ● A <key, value> data structure (hash table)
+        ● Declare:
+            ○ mapping(keyType => valueType) mapName
+        ● Get/Set:
+            ○ mapName[key]
+
+        Example:
+            pragma solidity ^0.4.25;
+            contract MappingExample {
+                mapping(address => uint) public balances;
+            
+                    function update(uint newBalance) public {
+                    balances[ msg.sender] = newBalance;
+                    }
+                }
+            
+                contract MappingUser {
+                function f() public returns (uint) {
+                    MappingExample m = new MappingExample();
+                    m.update( 100);
+                    return m.balances(this);
+                }
+            }
+
+    Remix IDE
+        ● Environm. where you write and test contracts
+        ● Can deploy contract in
+        ○ a local blockchain (JavaScript VM)
+        ○ Ethereum blockchain (Injected/Web3 Provider)

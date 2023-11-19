@@ -1,0 +1,63 @@
+Marriage:
+    On October 5, the first 'blockchain marriage' was held at Disney World's
+    Bitcoin Conference in Orlando, Florida. The event was submitted to the online
+    public registry, the blockchain, where the two lovers recorded their wedding
+    agreement without involvement of neither governmental, nor religious
+    representations.
+
+Lottery:
+    ● All the winnings are paid out in cryptocurrencies, and the same goes for buying tickets.
+    
+    ● Which means that you don’t have to travel anywhere, but can rather participate from the comfort of your
+    own home. The fact that Kibo is operating
+
+    ● Not having to pay taxes!
+
+Smart Alarm DApp:
+    ● Betternot.rest, a smart alarm clock DApp, powered by Syscoin’s smart
+    contracts platform, challenges you to improve your wake-up routine
+    and earn some money in the process.
+
+Online Music - dotBC Concentric Architecture:
+    ● It aims to develop a new standard for music content, called .bc – think
+    of it as an alternative to .mp3 or .wav
+    
+    ● .bc will contain not only the music itself, but also a host of information
+    connected to it: rightsholder details, terms of use, licensing restrictions
+    
+    ● licensees and streaming platforms all transact on a blockchain paying the correct royalties
+
+Gun Tracking
+
+Autonomous Decentralized Peer-to-Peer Telemetry
+    ● IBM and Samsung have been working on a concept known as ADEPT
+    
+    ● Blockchain would serve as a public ledger for a massive amount of devices, which would no longer
+    need a central hub to mediate communication between them
+
+Drug Traceability 
+    ● To insure the authenticity and traceability of the drugs, the companies that register a product
+    on the blockchain have to be trustworthy. Hence, only private blockchains controlled by a central
+    entity are logical to make sure that fake drugs are not registered.
+
+    ● The pharmaceutical companies decide which actors of the supply
+    chain act as miners. It could be manufacturers, distributors or retailers
+
+Decentralised Government Project
+    ● Bitnation, an ambitious project for the decentralisation of governance using blockchain technology, is
+    offering victims of the current refugee crisis an emergency digital ID and a bitcoin visa card to receive
+    funds from family in the absence of a bank account.
+
+Tracking Blood Diamonds
+    ● To clean up the trade in conflict-zone diamonds, is exploring
+    how blockchain could help trace the provenance of diamonds.
+    
+    ● Each gem is scanned to glean forty unique points that are condensed
+    into what is called "the diamond’s digital thumbprint"
+
+VeChain: Fashion on the Blockchain
+    ● A person’s phone communicates with the small VeChain chip
+    embedded inside the clothing or accessory, which then tells its “story” to the consumer.
+    
+    ● The chip holds a unique public and private key pair. The public key is
+    also stored in the blockchain and can be verified by the VeChain app
