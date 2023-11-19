@@ -1,0 +1,271 @@
+Cryptography Objectives:
+        ● Integrity
+        ● Authenticity
+        ● Tempestivity
+        ● Non repudiation
+        ● Confidentiality
+        ● Zero knowledge proofs
+
+Cryptography Basic Principles:
+        ● Hard Math/Computational Problem
+        ● Clear Threat Model
+        ● It is a security tool
+        ● It is not the answer to everything
+        ● If you don't know how to use it is worthless
+
+Hash Funtions:
+        ● H: A -> B
+        ● A = Set of all possible bit sequences (potentially infinite)
+        ● B = Set of all possible n-bit sequences where n>0 bits (2n elements)
+        ● The hash function creates a fingerprint of the bit sequence
+        ● It has three main properties:
+            ○ Preimage resistance: given H(x), it is hard to discover x
+            ○ 2nd Preimage resistance: given x and H(x) it is hard to discover y≠x that H(x)=H(y)
+            ○ Collision resistance:  it is very hard to find any x≠y that H(x)=H(y)
+            ● Avalanche effect: usually, even if x is similar to y, H(x) significantly differs from H(y)
+
+How hard it is to find a collision?
+    ● Estimate (birthday paradox): 2n/2 tries
+    ● Number of tries for SHA256 : 2 256/2 =3.4028237e+38
+    ● CPU 2,7 GHz Intel Core i7: 18 SHA256 per second
+    ● Estimate average time to find a collision: 5.9946017e+29 years
+    ● But with ASIC? 16TH/s today
+        ○ It only take 10e+12 years
+        ○ It costs around U$3000.00
+    ● We need to be aware of
+    institutional budgets from
+    agencies
+    ● Hash functions are not safe forever.
+
+Traditional Signatures/Digital Signatures
+    Signatures                        Private Key
+             ''''''                     ● Only you can create them.
+                                        ● They are reasonably hard to forge.
+    
+    Cartórios
+                                    Public Key
+                                        ● There are infrastructure to publicise your signature
+                                        ● Any third party can get an attestation that your signature is OK.
+
+Asymmetric Crypto Key Usage - Digital Signature Mode
+    
+    Message -> | C | -> Encrypted message ----->  Encrypted message -> | D | -> Message
+               | ^ |                                                   | ^ |
+                 |                                                       |
+                 |                                                       |
+             Private Key                                             Public Key
+
+By signing the hash function, it prevents  homomorphic properties of ciphers, but in order hand, allows for collisions on signature
+
+Public keys:
+        - increase in size by the time passed
+
+Pseudo Random Number Generators:
+    ● Used for:
+        ○ Key Generation
+        ○ Parameters Generation
+        ○ Session Control (nonce)
+    ● Randomness
+        ○ Uniform Distribution → easy
+        ○ Independence → difficult
+
+    Pseudo is due to the impossiblity of creating Randomness in a deterministic system, using the same seed, it leads to the creation of the
+    same sequence of random numbers.
+
+================================================================================================================================================================
+
+Hash Review:
+
+Hash Properties:
+    ● Mapping Function
+        ○ Domain is larger than image
+    ● Collision Resistant
+        ○ X and Y different means H(X) different than H(Y)
+    ● Random Distribution
+        ○ You don't know where the function will map on the Image
+    ● Non invertible
+        ○ Have only H(Y) you can't recover Y
+
+How Hashes are used in crytocurrencies:
+    ● Commitments
+        ○ You add n to Y and make H(n||Y), reveal n and the result of the function. Later you prove you committed to Y
+    ● Information Hiding
+        ○ By non-invertibility you only publish a commitment and can keep info.
+        ○ You can prove the information that was committed
+    ● Puzzles
+        ○ By randomness and collision resistance
+        ○ You fix commitment, introduce randomness and force partial collision
+
+Hash Pointers:
+    ● Pointer to information and its hash
+    ● Is useful when you need to keep track of information and its integrity
+    ● We can off-store information, retrieve it back and check integrity
+    ● Has to have integrity I need to keep all the hash pointers to my data
+    ● In itself its security is very expensive
+         ______
+        | Data |  <---- Hash Pointer
+         ______         ___________________
+                        | Pointer to Data |
+                        | Data Hash       |
+                        ___________________
+
+Hash Pointers in Data Structures:
+    ● You can build any data structure casting its type to 'hash pointers'
+    ● If the structure is not cyclical you only need to keep the hash pointer of the initial point to validate integrity of all the data stored
+    ● Examples are:
+        ○ Linked Lists ---> ■ Also known as Blockchain
+        ○ Trees --> ■ Known as Merkel trees
+    ● If the hash function is collision free, you can detect tampering and changes
+    ● Attacker cannot succeed if he he is not able to change what you keep
+
+
+ECDSA Issues:
+    ● DSA is a US Government Standard
+    ● EC means it uses Elliptic Curves
+    ● These signatures are the basis for almost all blockchains today
+        ○ Usually because it is cost effective.
+    ● You need good entropy (Randomness) to:
+        ○ Generate keys
+        ○ Sign
+    ● To be efficient you need sign less data
+        ○ Usually hash pointers
+
+Decentralised Identities in Cryptocurrencies:
+    ● Different than in PKI, keys are not tied to identities in cryptocurrencies
+    ● You can create new identities as you wish:
+        ○ Generate a new key pair
+        ○ Keep you private key private
+        ○ Use you public key as identity
+    ● Entities are identified by their public keys
+        ○ Which are also called wallets
+    ● There are no central point to assert identity
+    ● You can only cast messages as an identity with signatures made with the private key
+        ○ Lose you private key and you cannot have access to that identity
+    ● Although not tied to a real world identity, a wallet can be indetified by it's activity, whicht would lead to real world indetification.
+
+
+In order to build a simple Cryptocurrency:
+    ● Centralised mining
+    ● Money transfer function
+    ● When needed money is created
+    ● The creator can transfer money to an identity
+    ● That Identity can transfer further
+        ○ We can keep a track of coin authenticity
+        ○ But we can not avoid double spending
+    ● The only rule is that transactions are signed
+        ○ Mining is signed
+        ○ Spending is signed
+
+Building a simple ledger
+    ● To avoid double spending we need to keep track of transactions
+        ○ This is called ledger
+    ● A ledger can be kept by a central authority
+        ○ Central Bank maybe
+    ● The idea is that when you want to create or spend you register that on the ledger
+    ● As the ledger is signed by a trusted party everybody can trust it
+    ● Double spending can be easily detected by that central authority
+
+Buliding a transaction: 
+    ● All money should have an ID and be tracked
+    ● Should say where money is going (being created or destroyed)
+    ● Should be authorised by the identity holding the money
+    ● Should only be able to create and destroy money
+        ○ No split, combine or transfer
+        ○ We can achieve that only with destroying and creating
+    ● Should be balanced
+        ○ Output equals to Input
+    ● And checked for double spending
+
+Building a Simple Blockchain
+    ● The central authority can publish the ledger in blocks of transactions in a linked list
+    ● Every new element in this list is linked with the previous element by a hash pointer
+    ● The authority only signs the last hash pointer
+    ● Everyone can keep a copy of the whole history
+    ● This can be easily distributed through a P2P network from time to time
+
+===========================================================================================================================================================================
+
+Blockchain should be verifiable:
+    ● Double-spending is a major issue.
+    ● Therefore we should be able to check that all accounting data is consistent, complete, and uncorrupted from the initial balance up to current balance.
+    ● They are append-only logs that can not change written data or remove it, to identify the itegrity of data, it's good to use hash functions
+
+    - The simple usage of hash funtions alone does not garantee that the blockchain is consistent due to the fact a dishonest data keeper might change
+    data, and recalculate the hash function, changing it.
+
+    - A way to counter this action, is to use hashes in linked lists, which makes harder to change the data, so that:
+        
+      previ =  | H(arbitrary_data), if i = 0
+               | H(previ-1 || di),  if i > 0
+            
+     By this funtion it is possible to auditate wheter the dat is consistent or not in a blockchain,
+     and each piece depends on the next to be consistent, and even stablishes a time order in the among the blocks
+    
+    But even, in this scenario, the attacker might be able to change the most recently created data, and creates doubts wheter the data is safe or not,
+    by cretaing a corrupted hash or data into the chain. 
+
+    And a dishonest mantainer can fork the list, not add some pieces of data to the list, all this without being noticed, which would lead to too much
+    trust into a single actor (the mantainer).
+
+        To soften such assumputions:
+            - The insertion of more mantainers: 
+                -halves the trust due to the fact that is more unlikely that different maintainers will collude all together, but is harder to verify the list
+
+    Low points of Hash-based lists:
+        - Low efficient: Search and Insert operations are O(n), with the increase of the chain it's very likely that this will cause low efficient queries
+        - and as seen before trustworthy is not entirelly garanteed
+    
+    Using Two layer, hash-based linked lists
+        - One layer contains hashed of data
+        - The second contains hashes of hashes
+
+        previ =  | H(arbitrarydataPrev||H(di)), if i = 0
+                 | H(previ-1 || H(di)),  if i > 0
+    
+        This scructure helps to verify if the chain is not corrupted, because it's necessary that the previous blocks are correct in order to build the next
+        and the second layer hash function garantees that the first layer is ok, in order to reconstruct the block.
+
+        | AbitraryPrev | <- |prev0 : H()| <- |prev1 : H()| <- |prev2 : H()|
+                                ^                 ^                ^
+                                |                 |                |
+                            | H(d0)     | <- |   H()     | <- | H(d2)     |
+                                ^                 ^                ^
+                                |                 |                |
+                            | Data0     |    | Data1     |    | Data2     |
+        
+        
+        This structure, resolves some conlficts about the integrity of data but, do not solve problems about the efficiency of the data.
+
+    Merkel Trees: 
+        On the other hand, this structure helps solves both problems, due to the structure being a complete and balanced tree, the data efficiency
+        is O(logN) + 1, being quickly verifiable.
+
+            In order to verify it:
+                - Use the root and the siblings of the nodes from H(dk) to the root
+                - and checks until being able to reconstruct the root
+
+                ● Input: piece of data dk, hash root, and siblings hashes s1, s2,...,slog n
+                ● Output: boolean
+                ● Algorithm
+                    1. y = H(dk)
+                    2. for (i = 1, 3, ..., log n) {
+                    3.  if( isLeftSibling(y) )
+                    4.      y = H(y || si)
+                    5.  else
+                    6.      y = H(si|| y)
+                    7.  }
+                    8. return y == root
+    
+            But at the same time, they don't provide  a order and by adding new piece of data, it's necessary to
+            recompute logN hashes.
+    
+    A mixed structure: Merkle tree + two-layer, hash-based lists
+        ● To verify whether dk is uncorrupted, you
+            ○ need hash siblings from H(dk) to the rootk, next roots, and hashes prevk-1 and prevn
+            ○ check that you can reconstruct the prevn
+    
+    Hash-based skip lists:
+        ● n-layer, hash-based, linked lists
+        ● Links allow to skip hash computations
+    
+    

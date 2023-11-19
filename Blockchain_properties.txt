@@ -1,0 +1,149 @@
+Anonimity:
+    ● Literally: Without a name
+        ○ Crypto Currencies uses hashes of public keys
+        ○ They don't use a name, then it is anonymous?
+    ● Cryptocurrencies are Pseudo-Anonymous
+        ○ No Real Names
+        ○ But traces of activity!
+    ● Anonymity for us is two things:
+        ○ Pseudo Anonymity
+        ○ Unlinkability
+    ■ Different interactions should not link pseudo anonymous identities
+
+    Pseudo-anonymity versus anonymity:
+        ● Pseudo-anonymity:
+            ○ Choose a random address
+                ■ If you use it all the time, it leaves a trace
+                ■ Can be linked to you if someone saw you using it
+                ■ Can relate with other off-chain information
+        ● Anonymity:
+            ○ Choose a random address every time
+                ■ Very difficult to manage
+                ■ There are still correlations that can be created
+                ● You need to change IP address too!
+                ■ Much stronger than pseudo anonymity
+    
+        ● What is Unlinkability in Cryptocurrencies?
+            ○ Difficult to link different addresses to same person
+            ○ Difficult to link different transactions to same person
+            ○ Difficult to link sender and receiver
+
+        ● Why is it so difficult?
+            ○ Exchanges use KYC (Know Your Customer) standard
+            ○ Things can be deanonymised using side channels
+            ○ Link between physical and address
+            ○ Profiling is reasonably easy these days
+    
+        ● Having complete unlikability is very hard (almost impossible)
+            ○ There will always be some loose string
+            ○ Even in law the definition is not that fierce
+            ■ GDPR
+            ■ LGPD
+
+        ● We compute what we call Anonymity Set:
+            ○ It is the crowd we blend in
+            ○ We characterise it
+            ○ Define a threat model
+            ○ Determine what the attacker knows, what he don't and what her can't
+        
+        Why do people want anonymity?
+            ● Transactions are public
+                ○ Blockchain means no privacy on transactions
+                ○ There is much less privacy than in the traditional system
+                    ■ No big bank to hide your nasty business
+            
+            ● Anonymity is necessary for some lawfull cases
+
+            ● The main problem is that it can also be used for money laundering:
+                ○ We still need hard cash
+                ○ Access to it is regulated
+                ○ So anonymity does not pose a big problem to law enforcement
+                    ■ Other than having to hire guys that actually know how it works
+        
+        Anonymity in E-cash/ Crypto Currencies
+            ● Bitcoin was not first!
+                ○ E-cash predates crypto-currencies
+                    ■ Trust the bank!
+                
+                ○ Chaum's e-cash blind signatures protocol, 1992
+                    ■ Uses homomorphisms for that
+                    ■ Has its use not only in e-cash, but also in elections.
+
+                ○ Chaum's protocol works like:
+                    ■ Choose a random number and blind it
+                    ■ Ask for the bank to withdraw. Bank attached a value to the blinded number and signs it
+                    ■ You pass the coin on with the unblinded number
+                    ■ Receiver deposits. The bank checks his signature and the value
+                    ■ Bank pays for the coin and keeps track of double spending
+        
+        Anonymity versus Decentralization
+            ● Interactive protocols are hard to decentralise
+            ● You need to do it in public
+                ○ Blockchains
+                ○ Then you allow for traces
+            ● E-Cash works over a different set of assumptions
+            ● Unlinkability is more difficult due to public transactions
+        
+        What are the best practices for anonymity in Bitcoin?
+            ● Always use fresh addresses
+                ○ Specially for receiving
+            
+            ● They are easy to generate
+            ● Easy to throw away
+                ○ You only keep those you transacted
+            
+            ● They are pseudo anonymous
+
+            How to deanonymize bitcoin?
+                ● If you use multiple addresses, you will have your money spread
+                ● You will need to use two wallets to generate a transaction
+                    ○ Bigger output than the inputs alone
+                ● If two source wallest appear on the same transaction we can infer they belong to the same person
+                ● We can do it transitively
+                ● We clan cluster together the addresses that belong to the same person
+                    ○ The more one trancats the clearer it is
+
+                    ● This is how people find the addresses of exchanges to attack
+                    ● To confirm who your guess is just do one transaction with the possible ones then you confirm
+                    ● We can also map the change address for the transaction even if used only once
+                    ● But this adds some unlinkability
+                        ○ Gives false positives
+                
+                ● You will always flow towards a cluster
+                ● Law enforcement can identify you on the regulated side
+                ● Carelessness
+                    ○ Publishing address in forums!
+                
+                ● Bitcoin has a P2P layer
+                    ○ It uses IP addresses
+                ● First to broadcast is probably the source of the transaction
+                ● You can link that IP to a physical address
+                    ○ How law enforcement do for other things
+       
+                ● Solution:
+                    ○ Use a Mix Net
+                    ○ In practice people user TOR
+                
+                Mix Nets
+                    ● Know for a long time for election protocols
+                    ● The idea is to put everything in the same sack and take it out randomly
+                    ● Should not keep records
+                    ● Should not ask for identities
+                    ● Are the basis for TOR
+                    ● In the sense of Cryptocurrencies the lack of trust is a problem
+                        ○ Should I put my money on someone's bag?
+                
+                    - implementation of Mix Nets in Cryptocurrencies
+                        ● Must have some properties
+                            ○ Same size in and out
+                            ○ Have a standard API
+                            ○ Charge fees on all or nothing basis
+                            ○ Be trusted
+
+                        ● They are used as a bag to do the swaps
+                        ● Similar to TOR
+                        ● You can chain them
+                            ○ More anonymity, but more cost
+                        ● One implementation is Mixcoin from Joe Bonneau
+                            ○ Zcash
+                            ○ Monero
